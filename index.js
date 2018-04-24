@@ -19,8 +19,25 @@ fi = (function() {
       return collection
     },
 
-    map: function() {
-
+    map: function(collection, cb) {
+      // let newCollection = Object.assign({}, collection)
+      let newCollection;
+      if (Array.isArray(collection)) {   
+        newCollection = []
+        for (let i = 0; i < collection.length; i++) {
+         newCollection.push(cb(collection[i], i, collection));
+        }
+        return newCollection;
+      }
+      else { 
+        newCollection = Object.assign({}, collection);
+        let keyArray = Object.keys(collection);
+        for (let i = 0; i < keyArray.length; i++) {
+          // debugger
+          newCollection[keyArray[i]] = cb(collection[keyArray[i]], keyArray[i], collection)
+        }
+        return Object.values(newCollection)
+      }
     },
 
     reduce: function() {
