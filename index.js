@@ -40,8 +40,12 @@ fi = (function() {
       }
     },
 
-    reduce: function() {
-
+    reduce: function(collection, cb, acc) {
+      let sum = acc;
+      for (i = 0; i < collection.length; i++) {
+        sum = cb(sum, collection[i], collection);
+      }
+      return sum;
     },
 
     functions: function() {
